@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | Clairezworld Clothier</title>
+
+  <style>
+    :root {
+      --orange: #ff7a18;
+      --pink: #ff4f9a;
+      --dark: #1f1f1f;
+      --light: #ffffff;
+      --soft: #fff3f8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      background: var(--soft);
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+    }
+
+    /* BACK BUTTON */
+    .back-wrapper {
+      max-width: 1000px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 2px solid var(--pink);
+      color: var(--pink);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      border-color: transparent;
+    }
+
+    /* CONTACT SECTION */
+    .contact-section {
+      max-width: 1000px;
+      margin: 3rem auto 4rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-info,
+    .contact-form {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .contact-info h2,
+    .contact-form h2 {
+      color: var(--pink);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-info p {
+      margin-bottom: 1.1rem;
+      color: #555;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    input, textarea {
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 0.95rem;
+      outline: none;
+      resize: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--pink);
+    }
+
+    button.submit-btn {
+      margin-top: 0.5rem;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+    }
+
+    button.submit-btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: var(--pink);
+    }
+
+    @media (max-width: 800px) {
+      .contact-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Contact Clairezworld</h1>
+  <p>Let’s bring your perfect outfit to life</p>
+</header>
+
+<div class="back-wrapper">
+  <a href="index.html">
+    <button class="back-btn">← Back to Home</button>
+  </a>
+</div>
+
+<section class="contact-section">
+
+  <div class="contact-info">
+    <h2>Get in Touch</h2>
+    <p>We specialize in custom tailoring and ready-to-wear outfits designed to make you stand out.</p>
+    <p><strong>WhatsApp:</strong> 0806 765 88142</p>
+    <p><strong>Brand:</strong> Clairezworld Clothier</p>
+    <p><strong>Service:</strong> Luxury fashion & tailoring</p>
+  </div>
+
+  <div class="contact-form">
+    <h2>Send a Message</h2>
+
+    <form onsubmit="sendToWhatsApp(event)">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="tel" id="phone" placeholder="Your Phone Number" required>
+      <textarea id="message" rows="5" placeholder="Tell us what you’d like to order..." required></textarea>
+      <button type="submit" class="submit-btn">Submit on WhatsApp</button>
+    </form>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 <span>Clairezworld Clothier</span>. Crafted with passion.
+</footer>
+
+<script>
+  function sendToWhatsApp(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const message = document.getElementById("message").value;
+
+    const whatsappNumber = "23480676588142";
+
+    const text =
+      `Hello Clairezworld Clothier 🌸%0A%0A` +
+      `I would love to place an order / make an inquiry.%0A%0A` +
+      `━━━━━━━━━━━━━━%0A` +
+      `CLIENT DETAILS%0A` +
+      `━━━━━━━━━━━━━━%0A` +
+      `👤 Name: ${name}%0A` +
+      `📱 Phone: ${phone}%0A%0A` +
+      `━━━━━━━━━━━━━━%0A` +
+      `REQUEST%0A` +
+      `━━━━━━━━━━━━━━%0A` +
+      `${message}%0A%0A` +
+      `Thank you. I look forward to your response 💗`;
+
+    window.location.href =
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  }
+</script>
+
+</body>
+</html>

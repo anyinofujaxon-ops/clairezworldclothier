@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Collections | Clairezworld Clothier</title>
+
+  <style>
+    :root {
+      --orange: #ff7a18;
+      --pink: #ff4f9a;
+      --dark: #1f1f1f;
+      --light: #ffffff;
+      --soft: #fff3f8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      background: var(--soft);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: var(--light);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+    }
+
+    /* BACK BUTTON */
+    .back-wrapper {
+      max-width: 1200px;
+      margin: 1.5rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 2px solid var(--pink);
+      color: var(--pink);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      border-color: transparent;
+    }
+
+    .collection-section {
+      padding: 4rem 1.5rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      color: var(--pink);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: #555;
+    }
+
+    .design-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .design-card {
+      background: var(--light);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .design-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .design-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .design-content {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .design-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .design-content p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    footer {
+      margin-top: 4rem;
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: var(--pink);
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Our Collections</h1>
+  <p>Luxury designs tailored to express confidence and individuality</p>
+</header>
+
+<div class="back-wrapper">
+  <a href="index.html">
+    <button class="back-btn">← Back to Home</button>
+  </a>
+</div>
+
+<section class="collection-section">
+
+  <div class="section-title">
+    <h2>Featured Designs</h2>
+    <p>Browse our handpicked designs, made to fit beautifully</p>
+  </div>
+
+  <div class="design-grid">
+
+    <div class="design-card">
+      <img src="imgs/Black Short Dress.png" alt="Design 1">
+      <div class="design-content">
+        <h3>Black Short Dress</h3>
+        <p>Bright, elegant, and effortlessly stylish.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/black-pleated-dress.png" alt="Design 2">
+      <div class="design-content">
+        <h3>Black Pleated Dress</h3>
+        <p>A soft luxury look with a bold finish.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/bllack-buttons.png" alt="Design 3">
+      <div class="design-content">
+        <h3>Black Buttoned Dress</h3>
+        <p>Perfect for modern, confident women.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/jean-denim.png" alt="Design 4">
+      <div class="design-content">
+        <h3>Jean Denim</h3>
+        <p>Timeless design with premium finishing.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/pld.png" alt="Design 5">
+      <div class="design-content">
+        <h3>Long Patterned Dress</h3>
+        <p>Designed for elegance and comfort.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/signature-white.png" alt="Design 6">
+      <div class="design-content">
+        <h3>Signature White Outfit</h3>
+        <p>A beautiful blend of culture and class.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/tealite.jpeg" alt="Design 7">
+      <div class="design-content">
+        <h3>Teal Top And White Trousers</h3>
+        <p>Made to command attention.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/spotty.jpeg" alt="Design 8">
+      <div class="design-content">
+        <h3>Spotty Beaded Outfit</h3>
+        <p>Simple, clean, and powerful.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/jumping.jpeg" alt="Design 9">
+      <div class="design-content">
+        <h3>Office Top And Trouser</h3>
+        <p>Relaxed style with a luxury touch.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="design-card">
+      <img src="./imgs/beach.jpeg" alt="Design 10">
+      <div class="design-content">
+        <h3>Black Rose and Patterned Trousers</h3>
+        <p>Our signature style, bold and refined.</p>
+        <a href="contact.html" class="btn">Shop Now</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 <span>Clairezworld Clothier</span>. Designed with passion.
+</footer>
+
+</body>
+</html>

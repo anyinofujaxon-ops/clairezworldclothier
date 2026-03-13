@@ -1,518 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClairezWorld | Luxury Fashion & Empowerment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clairezworld | The Iconic Series</title>
+    <style>
+        :root {
+            --primary-orange: #FF6F3C;
+            --primary-pink: #FF69B4;
+            --dark-slate: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.98);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --whatsapp: #25D366;
+            --light-gray: #f1f5f9;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        /* --- 1. GLOBAL BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: var(--dark-slate);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-  <style>
-    /* --- CSS STYLES --- */
-    :root {
-      --orange: #ff7a18;
-      --pink: #ff4f9a;
-      --light: #fff0f7;
-      --dark: #1a1a1a;
-      --gray: #555;
-      --white: #ffffff;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --gradient: linear-gradient(90deg, var(--orange), var(--pink));
-      --whatsapp-green: #25D366;
-    }
+        /* --- 2. SPA ROUTER --- */
+        .page { display: none; min-height: 100vh; padding-top: 80px; animation: pageSlide 0.6s ease; }
+        .page.active { display: block; }
+        @keyframes pageSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        /* --- 3. HEADER & NAVIGATION --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 3000;
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo {
+            font-size: 1.7rem; font-weight: 900; cursor: pointer;
+            background: linear-gradient(to right, var(--primary-pink), var(--primary-orange));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+        .nav-desktop { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-desktop a { text-decoration: none; color: var(--dark-slate); font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .nav-desktop a.active { color: var(--primary-pink); }
 
-    body { background: var(--light); color: var(--dark); line-height: 1.6; }
+        /* Mobile Hamburger */
+        .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 4000; }
+        .hamburger span { display: block; width: 28px; height: 3px; background: var(--dark-slate); border-radius: 10px; transition: 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -7px); }
 
-    /* --- Header & Navigation --- */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 80px;
-      background: var(--gradient);
-      color: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+        .mobile-menu {
+            position: fixed; top: 0; left: -100%; width: 100%; height: 100vh;
+            background: white; z-index: 3500; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: 0.5s;
+        }
+        .mobile-menu.open { left: 0; }
+        .mobile-menu a { font-size: 2.5rem; font-weight: 900; color: var(--dark-slate); margin: 15px 0; text-decoration: none; }
 
-    header h1 { font-size: 30px; font-weight: 800; letter-spacing: -1px; cursor: pointer; }
+        /* --- 4. FILTERS --- */
+        .filter-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 40px 0; }
+        .filter-btn {
+            padding: 10px 30px; border-radius: 50px; border: 1.5px solid #eee;
+            background: white; cursor: pointer; font-weight: 800; transition: var(--transition);
+        }
+        .filter-btn.active { background: var(--dark-slate); color: white; border-color: var(--dark-slate); }
 
-    nav { display: flex; align-items: center; }
-    nav a { color: white; text-decoration: none; margin-left: 30px; font-weight: 500; cursor: pointer; font-size: 15px; transition: 0.3s; opacity: 0.9; }
-    nav a:hover { opacity: 1; transform: scale(1.05); }
+        /* --- 5. PRODUCT GRID --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
+        .p-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+        .p-card { background: #fff; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.04); transition: var(--transition); }
+        .p-card:hover { transform: translateY(-12px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+        .p-img { width: 100%; height: 420px; object-fit: cover; }
+        .p-body { padding: 30px; text-align: center; }
+        .p-name { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
+        .p-price { color: var(--primary-orange); font-weight: 900; font-size: 1.2rem; }
 
-    /* --- Page Transitions & Layout --- */
-    .page {
-      display: none;
-      min-height: 100vh;
-      padding: 120px 80px 60px;
-      animation: fadeIn 0.5s ease-out;
-    }
+        /* --- 6. CART DRAWER --- */
+        .cart-drawer {
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 500px;
+            height: 100%; background: white; z-index: 4500; padding: 50px;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.1); transition: var(--transition);
+            display: flex; flex-direction: column;
+        }
+        .cart-drawer.active { right: 0; }
+        .cart-item { display: flex; gap: 20px; align-items: center; padding: 20px 0; border-bottom: 1px solid #f1f1f1; }
 
-    .page.active { display: block; }
+        /* --- 7. BUTTONS --- */
+        .btn-lux {
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-orange));
+            color: white; padding: 18px 38px; border-radius: 60px; border: none;
+            font-weight: 800; cursor: pointer; transition: 0.3s; display: inline-block; text-decoration: none;
+        }
+        .btn-lux:hover { transform: scale(1.04); box-shadow: 0 15px 30px rgba(255, 111, 60, 0.3); }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- Typography & Buttons --- */
-    h2.gradient {
-      font-size: 55px;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 25px;
-      font-weight: 800;
-    }
-
-    .section-title { text-align: center; margin-bottom: 50px; }
-    .section-title p { color: var(--gray); font-size: 18px; max-width: 600px; margin: 10px auto; }
-
-    .btn {
-      display: inline-block;
-      padding: 16px 45px;
-      border-radius: 50px;
-      background: var(--gradient);
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(255, 122, 24, 0.2);
-    }
-
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 122, 24, 0.3); }
-
-    /* WhatsApp Button Specific Style */
-    .btn-whatsapp {
-      background: var(--whatsapp-green);
-      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
-      padding: 12px 30px;
-      font-size: 14px;
-      width: 100%;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    
-    .btn-whatsapp:hover {
-      background: #1ebc57;
-      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3);
-    }
-
-    /* --- Grid & Cards --- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    .card {
-      background: var(--white);
-      border-radius: 30px;
-      padding: 25px;
-      box-shadow: var(--shadow);
-      transition: 0.4s;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card:hover { transform: translateY(-12px); border-color: var(--pink); }
-
-    /* --- Shop Styling --- */
-    .product-img-wrapper {
-      width: 100%;
-      height: 320px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      background: #f9f9f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card img { width: 100%; height: 100%; object-fit: cover; }
-    .card h4 { font-size: 20px; margin-bottom: 8px; }
-    .price { color: var(--pink); font-size: 22px; font-weight: 700; margin-bottom: 15px; display: block; }
-
-    /* --- Hero & Other Sections --- */
-    .hero { text-align: center; max-width: 1000px; margin: 0 auto 100px; padding: 40px 0; }
-    .hero p { font-size: 22px; color: var(--gray); margin-bottom: 30px; }
-
-    .newsletter {
-      background: var(--gradient);
-      padding: 80px;
-      border-radius: 50px;
-      color: white;
-      text-align: center;
-      margin: 80px 0;
-    }
-    .newsletter h3 { font-size: 40px; margin-bottom: 15px; }
-    .newsletter-form { display: flex; max-width: 600px; margin: 30px auto 0; gap: 10px; }
-    .newsletter-form input { flex: 1; padding: 15px 25px; border-radius: 30px; border: none; font-size: 16px; outline: none; }
-    .newsletter-form button { background: var(--dark); color: white; border: none; padding: 15px 35px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-    .newsletter-form button:hover { background: #000; }
-
-    /* --- FAQ Section --- */
-    .faq-container { max-width: 800px; margin: 80px auto 0; }
-    .faq-item { background: white; margin-bottom: 15px; border-radius: 20px; padding: 25px; cursor: pointer; transition: 0.3s; text-align: left; }
-    .faq-item:hover { box-shadow: var(--shadow); }
-    .faq-item h4 { display: flex; justify-content: space-between; align-items: center; }
-    .faq-content { display: none; padding-top: 15px; color: var(--gray); font-size: 15px; border-top: 1px solid #eee; margin-top: 15px; }
-
-    /* --- Footer --- */
-    footer { background: #111; color: #fff; padding: 80px 80px 40px; margin-top: 80px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 50px; margin-bottom: 50px; text-align: left; }
-    .footer-col h4 { margin-bottom: 25px; font-size: 20px; position: relative; }
-    .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 40px; height: 2px; background: var(--orange); }
-    .footer-col p { color: #999; font-size: 14px; margin-bottom: 15px; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 12px; }
-    .footer-col ul li a { color: #999; text-decoration: none; font-size: 14px; transition: 0.3s; cursor: pointer; }
-    .footer-col ul li a:hover { color: var(--orange); padding-left: 5px; }
-    .social-links { display: flex; gap: 15px; margin-top: 20px; }
-    .social-links a { width: 40px; height: 40px; background: #222; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; text-decoration: none; transition: 0.3s; }
-    .social-links a:hover { background: var(--gradient); transform: translateY(-5px); }
-    .footer-bottom { border-top: 1px solid #222; padding-top: 30px; text-align: center; color: #666; font-size: 13px; }
-
-    /* --- Responsive Design --- */
-    @media (max-width: 900px) {
-      header { padding: 15px 30px; }
-      .page { padding: 120px 30px 60px; }
-      h2.gradient { font-size: 40px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 600px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .newsletter { padding: 40px 20px; }
-      .newsletter-form { flex-direction: column; }
-    }
-  </style>
+        @media (max-width: 992px) { .nav-desktop { display: none; } .hamburger { display: flex; } }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1 onclick="showPage('home')">ClairezWorld</h1>
-  <nav>
-    <a onclick="showPage('home')">Home</a>
-    <a onclick="showPage('shop')">Shop</a>
-    <a onclick="showPage('about')">About</a>
-    <a onclick="showPage('contact')">Contact</a>
-  </nav>
-</header>
-
-<section id="home" class="page active">
-  <div class="hero">
-    <h2 class="gradient">Fashion That Defines Your Power</h2>
-    <p>Empowering the modern woman through bold self-expression and premium craftsmanship. Discover your next signature look.</p>
-    <a class="btn" onclick="showPage('shop')">Explore The Collection</a>
-  </div>
-
-  <div class="section-title">
-    <h2 class="gradient">Signature Categories</h2>
-    <p>Thoughtfully designed pieces that transition seamlessly from corporate command to evening elegance.</p>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="product-img-wrapper"><img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=800&q=80" alt="New Arrivals"></div>
-      <h4>New Arrivals</h4>
-      <p>Fresh drops inspired by modern energy and bold silhouettes.</p>
-      <a class="btn" style="padding: 10px 30px; font-size: 14px; margin-top: 15px;" onclick="showPage('shop')">Discover</a>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80" alt="Best Sellers"></div>
-      <h4>Best Sellers</h4>
-      <p>The most-loved pieces worn by confident women worldwide.</p>
-      <a class="btn" style="padding: 10px 30px; font-size: 14px; margin-top: 15px;" onclick="showPage('shop')">Shop Most Wanted</a>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=800&q=80" alt="Seasonal Picks"></div>
-      <h4>Seasonal Picks</h4>
-      <p>Curated outfits designed for the trends of the current season.</p>
-      <a class="btn" style="padding: 10px 30px; font-size: 14px; margin-top: 15px;" onclick="showPage('shop')">View Edit</a>
-    </div>
-  </div>
-
-  <div class="newsletter">
-    <h3>Join the Inner Circle</h3>
-    <p>Sign up for early access to new drops, style guides, and exclusive rewards.</p>
-    <form class="newsletter-form" onsubmit="alert('Thank you for subscribing!'); return false;">
-      <input type="email" placeholder="Your email address" required>
-      <button type="submit">Subscribe</button>
-    </form>
-  </div>
-</section>
-
-<section id="shop" class="page">
-  <div class="section-title">
-    <h2 class="gradient">The Collection</h2>
-    <p>Premium fabrics. Tailored fits. Bold expression.</p>
-  </div>
-  
-  <div class="grid">
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/bllack-buttons.png" alt="Black Buttoned Dress"></div>
-      <h4>Black Buttoned Dress</h4>
-      <span class="price">$49.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Black Buttoned Dress', 'imgs/bllack-buttons.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/jean-denim.png" alt="Jean Denim Dress"></div>
-      <h4>Jean Denim Dress</h4>
-      <span class="price">$29.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Jean Denim Dress', 'imgs/jean-denim.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/signature-white.png" alt="Signature White Dress"></div>
-      <h4>Signature White Dress</h4>
-      <span class="price">$59.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Signature White Dress', 'imgs/signature-white.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/pld.png" alt="Patterned Long Dress"></div>
-      <h4>Patterned Long Dress</h4>
-      <span class="price">$79.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Patterned Long Dress', 'imgs/pld.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/Black Short Dress.png" alt="Short Buttoned Dress"></div>
-      <h4>Short Buttoned Dress</h4>
-      <span class="price">$39.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Short Buttoned Dress', 'imgs/Black Short Dress.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="imgs/black-pleated-dress.png" alt="Black Pleated Dress"></div>
-      <h4>Black Pleated Dress</h4>
-      <span class="price">$54.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Black Pleated Dress', 'imgs/black-pleated-dress.png')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80" alt="Silk Jumpsuit"></div>
-      <h4>Silk Wrap Jumpsuit</h4>
-      <span class="price">$89.99</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Silk Wrap Jumpsuit', 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-    <div class="card">
-      <div class="product-img-wrapper"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80" alt="Midnight Blazer"></div>
-      <h4>Midnight Blazer Set</h4>
-      <span class="price">$120.00</span>
-      <button class="btn btn-whatsapp" onclick="buyOnWhatsapp('Midnight Blazer Set', 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80')">
-        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-      </button>
-    </div>
-  </div>
-</section>
-
-<section id="about" class="page">
-  <div class="section-title">
-    <h2 class="gradient">The Vision</h2>
-  </div>
-  
-  <div style="max-width: 1000px; margin: auto;">
-    <p style="font-size: 20px; color: #333; font-weight: 500; margin-bottom: 40px; text-align: center;">
-      ClairezWorld was founded to empower women through fashion that bridges the gap between elegance and authority.
-    </p>
-    
-    <div class="grid">
-      <div class="card">
-        <i class="fas fa-crown" style="font-size: 2rem; color: var(--orange); margin-bottom: 15px;"></i>
-        <h4>Our Mission</h4>
-        <p>To inspire confidence through bold, high-quality fashion.</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-globe" style="font-size: 2rem; color: var(--pink); margin-bottom: 15px;"></i>
-        <h4>Our Vision</h4>
-        <p>To be the global destination for empowered luxury wear.</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-heart" style="font-size: 2rem; color: var(--orange); margin-bottom: 15px;"></i>
-        <h4>Our Values</h4>
-        <p>Creativity, inclusivity, and uncompromising quality.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="page">
-  <div class="section-title">
-    <h2 class="gradient">Get In Touch</h2>
-    <p>Questions about sizing, shipping, or collections? Our team is here to help.</p>
-  </div>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 50px; max-width: 1100px; margin: auto;">
-    <div class="card" style="text-align: left;">
-      <h4 style="margin-bottom: 25px;">Contact Information</h4>
-      
-      <div style="margin-bottom: 20px;">
-        <i class="fas fa-phone-alt" style="color: var(--pink); margin-right: 12px; width: 20px;"></i>
-        <span>08067658142</span>
-      </div>
-      <div style="margin-bottom: 20px;">
-        <i class="fas fa-envelope" style="color: var(--pink); margin-right: 12px; width: 20px;"></i>
-        <span>hello@clairezworld.com</span>
-      </div>
-      <div style="margin-bottom: 20px;">
-        <i class="fas fa-map-marker-alt" style="color: var(--pink); margin-right: 12px; width: 20px;"></i>
-        <span>Lagos, Nigeria</span>
-      </div>
-
-      <div class="social-links" style="justify-content: flex-start;">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-        <a href="#"><i class="fab fa-whatsapp"></i></a>
-      </div>
+    <div id="mobileMenu" class="mobile-menu">
+        <a onclick="closeMobileMenu('home')">Home</a>
+        <a onclick="closeMobileMenu('collections')">The Series</a>
+        <a onclick="closeMobileMenu('about')">The Studio</a>
+        <a onclick="closeMobileMenu('contact')">Contact</a>
     </div>
 
-    <form onsubmit="sendMessage(event)" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <input type="text" placeholder="First Name" required style="grid-column: span 1; padding: 15px; border-radius: 15px; border: 1px solid #ddd; outline: none;">
-      <input type="text" placeholder="Last Name" required style="grid-column: span 1; padding: 15px; border-radius: 15px; border: 1px solid #ddd; outline: none;">
-      <input type="email" placeholder="Email Address" required style="grid-column: span 2; padding: 15px; border-radius: 15px; border: 1px solid #ddd; outline: none;">
-      <textarea rows="5" placeholder="Your Message" required style="grid-column: span 2; padding: 15px; border-radius: 15px; border: 1px solid #ddd; outline: none;"></textarea>
-      <button class="btn" type="submit" style="grid-column: span 2;">Send Message</button>
-    </form>
-  </div>
-
-  <div class="faq-container">
-    <h3 style="text-align: center; margin-bottom: 40px;">Frequently Asked Questions</h3>
-    
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <h4>What is your shipping policy? <i class="fas fa-plus" style="font-size: 0.8rem;"></i></h4>
-      <div class="faq-content">We offer nationwide delivery within 3-5 business days and international shipping between 7-14 days.</div>
-    </div>
-    
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <h4>How do I track my order? <i class="fas fa-plus" style="font-size: 0.8rem;"></i></h4>
-      <div class="faq-content">Once your order is dispatched, you will receive an email with a unique tracking number and link.</div>
+    <div id="cartDrawer" class="cart-drawer">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2.2rem; font-weight: 900;">The Bag</h2>
+            <button onclick="toggleCart()" style="background:none; border:none; font-size: 3.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="cartList" style="flex:1; overflow-y: auto;"></div>
+        <div style="padding-top: 30px; border-top: 2px solid #000;">
+            <div style="display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: 900; margin-bottom: 25px;">
+                <span>Total</span>
+                <span id="cartTotal">₦0</span>
+            </div>
+            <button class="btn-lux" style="width: 100%; background: var(--whatsapp); font-size: 1.1rem;" onclick="whatsappCheckout()">
+                Confirm Order
+            </button>
+        </div>
     </div>
 
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <h4>Can I return an item? <i class="fas fa-plus" style="font-size: 0.8rem;"></i></h4>
-      <div class="faq-content">Yes, returns are accepted within 7 days of delivery for store credit or exchange, provided items are unworn and in original packaging.</div>
-    </div>
-  </div>
-</section>
+    <header>
+        <div class="logo" onclick="showPage('home')">CLAIREZWORLD.</div>
+        <nav class="nav-desktop">
+            <a onclick="showPage('home')" id="d-home">Home</a>
+            <a onclick="showPage('collections')" id="d-collections">The Series</a>
+            <a onclick="showPage('about')" id="d-about">The Studio</a>
+            <a onclick="showPage('contact')" id="d-contact">Contact</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 25px;">
+            <div style="cursor:pointer; position:relative;" onclick="toggleCart()">
+                👜 <span id="badge" style="position:absolute; top:-10px; right:-12px; background:var(--primary-pink); color:white; font-size:0.75rem; padding:4px 8px; border-radius:50%; border: 2px solid white; font-weight: 800;">0</span>
+            </div>
+            <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
 
-<footer>
-  <div class="footer-grid">
-    <div class="footer-col">
-      <h2 style="color: white; margin-bottom: 20px;">ClairezWorld</h2>
-      <p>Elevating female corporate and luxury fashion. Empowering your journey with elegance, confidence, and bold style.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a onclick="showPage('home')">Home</a></li>
-        <li><a onclick="showPage('shop')">Shop All</a></li>
-        <li><a onclick="showPage('about')">Our Story</a></li>
-        <li><a onclick="showPage('contact')">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Customer Support</h4>
-      <ul>
-        <li><a href="#">Size Guide</a></li>
-        <li><a href="#">Shipping Rates</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Join The World</h4>
-      <p>Stay updated with our latest collections and style edits.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-pinterest-p"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 ClairezWorld | Designed with 🧡 & 💗 in Lagos</p>
-  </div>
-</footer>
+    <main id="home" class="page active">
+        <section style="height: 85vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('./imgs/signature-white.png') center/cover; color: white; text-align: center; padding: 0 20px;">
+            <div>
+                <h2 style="font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: 0.9; letter-spacing: -3px;">ICONIC.</h2>
+                <p style="margin: 30px 0 50px; font-size: 1.4rem; font-weight: 500; opacity: 0.8; letter-spacing: 2px;">THE SIGNATURE MUSE SERIES</p>
+                <button class="btn-lux" onclick="showPage('collections')">View the Series</button>
+            </div>
+        </section>
+        
+        <section class="container" style="padding: 100px 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+                <div style="text-align: center; padding: 40px; border: 1px solid #eee; border-radius: 30px;">
+                    <h3>Lagos Crafted</h3>
+                    <p style="margin-top: 15px; color: #666;">Each piece is born in the heart of Nigeria, infused with soul and precision.</p>
+                </div>
+                <div style="text-align: center; padding: 40px; border: 1px solid #eee; border-radius: 30px;">
+                    <h3>Global Reach</h3>
+                    <p style="margin-top: 15px; color: #666;">From the Studio to your door in London, Toronto, or New York.</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<script>
-  // Page Navigation
-  function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    window.scrollTo(0, 0);
-  }
+    <main id="collections" class="page">
+        <div class="container">
+            <h1 style="text-align: center; margin: 60px 0; font-size: 3rem; letter-spacing: -2px;">The Series</h1>
+            <div class="filter-container">
+                <button class="filter-btn active" onclick="applyFilter('all', this)">All</button>
+                <button class="filter-btn" onclick="applyFilter('formal', this)">Formal</button>
+                <button class="filter-btn" onclick="applyFilter('casual', this)">Casual</button>
+                <button class="filter-btn" onclick="applyFilter('signature', this)">Signature</button>
+            </div>
+            <div class="p-grid" id="mainGrid"></div>
+        </div>
+    </main>
 
-  // Contact Form Handling
-  function sendMessage(e) {
-    e.preventDefault();
-    alert('Thank you! Your message has been sent to ClairezWorld. We will reach out shortly.');
-  }
+    <main id="about" class="page">
+        <div class="container" style="padding: 100px 0; text-align: center;">
+            <h2 style="font-size: 4rem; letter-spacing: -3px; margin-bottom: 20px;">The Studio</h2>
+            <p style="max-width: 700px; margin: 0 auto 80px; font-size: 1.2rem; color: #666;">A fashion legacy anchored by Elizabeth, visualized by Claire, and engineered by Jaxon.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+                <div class="p-card" style="padding: 50px;">
+                    <img src="./imgs/claire-ready.png" style="width:160px; height:160px; border-radius:50%; object-fit:cover; border: 6px solid var(--primary-pink); margin-bottom: 25px;">
+                    <h4>Claire</h4>
+                    <p style="color:var(--primary-pink); font-weight:900; letter-spacing: 2px; font-size: 0.8rem;">CHIEF DESIGNER</p>
+                </div>
+                <div class="p-card" style="padding: 50px;">
+                    <img src="./imgs/jaxon-ready.png" style="width:160px; height:160px; border-radius:50%; object-fit:cover; border: 6px solid var(--primary-orange); margin-bottom: 25px;">
+                    <h4>Jaxon</h4>
+                    <p style="color:var(--primary-orange); font-weight:900; letter-spacing: 2px; font-size: 0.8rem;">TECH ARCHITECT</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-  // FAQ Toggle Handling
-  function toggleFaq(element) {
-    const content = element.querySelector('.faq-content');
-    const icon = element.querySelector('i');
-    if (content.style.display === 'block') {
-      content.style.display = 'none';
-      icon.className = 'fas fa-plus';
-    } else {
-      content.style.display = 'block';
-      icon.className = 'fas fa-minus';
-    }
-  }
+    <main id="contact" class="page">
+        <div class="container" style="text-align: center; padding: 120px 0;">
+            <h2 style="font-size: 4rem; letter-spacing: -3px;">Direct Line.</h2>
+            <p style="margin-top: 30px; font-size: 1.8rem; font-weight: 900; color: var(--primary-pink);">+234 806 765 8142</p>
+            <div style="margin-top: 60px;">
+                <button class="btn-lux" onclick="window.open('https://wa.me/2348067658142')">Talk to the Studio</button>
+            </div>
+        </div>
+    </main>
 
-  // --- SMART WHAT
-  // SAPP FUNCTION ---
-  function buyOnWhatsapp(productName, imgSrc) {
-    // Phone number (Nigeria code 234)
-    const phoneNumber = "2348067658142";
-    
-    // Start the message
-    let message = `Hello ClairezWorld! I would love to buy the: ${productName}. I saw on your website`;
-    
-    // INTELLIGENT LINK CHECK:
-    // If the image is a web link (starts with http), we append it to the message.
-    // If it is a local file (on your computer), we just send the name.
-    if (imgSrc && imgSrc.startsWith('http')) {
-      message += ` Here is the item: ${imgSrc}`;
-    }
-    
-    // Encode the message so it works in the URL
-    const encodedMessage = encodeURIComponent(message);
-    
-    // Open WhatsApp
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-  }
-</script>
+    <footer style="background: var(--dark-slate); color: white; padding: 100px 5%; text-align: center; border-radius: 60px 60px 0 0;">
+        <p style="opacity: 0.4; font-size: 0.9rem; letter-spacing: 2px;">&copy; 2026 CLAIREZWORLD | ARCHITECTED BY JAXON</p>
+    </footer>
 
+    <script>
+        // --- 1. ICONIC SINGLE-NAME DATABASE ---
+        const DB = [
+            { id: 1, name: "Amara", price: 85000, cat: "formal", img: "./imgs/black-pleated-dress.png" },
+            { id: 2, name: "Sophia", price: 45000, cat: "casual", img: "imgs/Black Short Dress.png" },
+            { id: 3, name: "Zara", price: 75000, cat: "signature", img: "./imgs/signature-white.png" },
+            { id: 4, name: "Naomi", price: 42000, cat: "casual", img: "./imgs/jean-denim.png" },
+            { id: 5, name: "Grace", price: 62000, cat: "formal", img: "./imgs/bllack-buttons.png" },
+            { id: 6, name: "Bella", price: 55000, cat: "signature", img: "./imgs/tealite.jpeg" },
+            { id: 7, name: "Olivia", price: 38000, cat: "casual", img: "./imgs/spotty.jpeg" },
+            { id: 8, name: "Victoria", price: 48000, cat: "formal", img: "./imgs/jumping.jpeg" },
+            { id: 9, name: "Maya", price: 65000, cat: "signature", img: "./imgs/pld.png" }
+        ];
+
+        let cart = [];
+
+        // --- 2. ROUTING ---
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-desktop a').forEach(a => a.classList.remove('active'));
+            const link = document.getElementById('d-' + id);
+            if(link) link.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+            document.getElementById('hamburger').classList.toggle('open');
+        }
+
+        function closeMobileMenu(id) { toggleMobileMenu(); showPage(id); }
+
+        function toggleCart() { document.getElementById('cartDrawer').classList.toggle('active'); }
+
+        // --- 3. DYNAMIC FILTERING ---
+        function applyFilter(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const grid = document.getElementById('mainGrid');
+            const filtered = category === 'all' ? DB : DB.filter(p => p.cat === category);
+            grid.innerHTML = filtered.map(p => `
+                <div class="p-card" style="animation: fadeInUp 0.5s ease;">
+                    <img src="${p.img}" class="p-img">
+                    <div class="p-body">
+                        <p style="font-size:0.6rem; color:#aaa; text-transform:uppercase; letter-spacing:3px;">${p.cat}</p>
+                        <h3 class="p-name">${p.name}</h3>
+                        <p class="p-price">₦${p.price.toLocaleString()}</p>
+                        <button class="btn-lux" style="font-size:0.9rem; margin-top: 20px; width: 100%;" onclick="addToCart(${p.id})">Reserve Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- 4. CART & WHATSAPP ENGINE ---
+        function addToCart(pid) {
+            const item = DB.find(p => p.id === pid);
+            cart.push(item);
+            updateCart();
+            if(!document.getElementById('cartDrawer').classList.contains('active')) toggleCart();
+        }
+
+        function updateCart() {
+            const list = document.getElementById('cartList');
+            const badge = document.getElementById('badge');
+            const total = document.getElementById('cartTotal');
+            badge.innerText = cart.length;
+            list.innerHTML = cart.map((item, i) => `
+                <div class="cart-item">
+                    <img src="${item.img}" style="width:70px; height:70px; border-radius:15px; object-fit:cover;">
+                    <div style="flex:1"><strong>${item.name}</strong><br><span style="color:#777;">₦${item.price.toLocaleString()}</span></div>
+                    <button onclick="cart.splice(${i},1); updateCart();" style="color:#ff4d4d; border:none; background:none; cursor:pointer; font-size:1.8rem;">&times;</button>
+                </div>
+            `).join('');
+            const sum = cart.reduce((acc, curr) => acc + curr.price, 0);
+            total.innerText = `₦${sum.toLocaleString()}`;
+        }
+
+        function whatsappCheckout() {
+            if (cart.length === 0) return alert("Select your iconic pieces first!");
+            const phone = "2348067658142";
+            let msg = "Hello Jaxon! 👗✨\nI'm ready to acquire these pieces from the Iconic Series:\n\n";
+            cart.forEach((item, i) => {
+                msg += `${i+1}. *${item.name}* — ₦${item.price.toLocaleString()}\n`;
+            });
+            msg += `\n*Order Value: ₦${cart.reduce((a,c)=>a+c.price,0).toLocaleString()}*\n\nLooking forward to your confirmation!`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        window.onload = () => applyFilter('all', document.querySelector('.filter-btn'));
+    </script>
 </body>
 </html>
